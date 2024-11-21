@@ -5,7 +5,8 @@ local masqueGroup = Masque:Group("OmniCD", "Unitframes")
 local E = select(2, ...):unpack()
 local P, CM = E.Party, E.Comm
 
-local pairs, type, sort, tinsert, tremove, wipe, floor, min, max = pairs, type, sort, tinsert, tremove, wipe, floor, min, max
+local pairs, type, sort, tinsert, tremove, wipe, floor, min, max = pairs, type, sort, tinsert, tremove, wipe, floor, min,
+	max
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 
 local GetSpellLevelLearned = C_Spell and C_Spell.GetSpellLevelLearned or GetSpellLevelLearned
@@ -198,7 +199,8 @@ function BarFrameMixin:ApplySettings()
 		icon:SetChargeScale()
 		icon:SetTooltip()
 		if icon.glowBorder then
-			icon.Glow:SetShown(not isDeadOrOffline and (condition==3 or (condition==1 and icon.active~=0) or (condition==2 and icon.active==0)))
+			icon.Glow:SetShown(not isDeadOrOffline and
+				(condition == 3 or (condition == 1 and icon.active ~= 0) or (condition == 2 and icon.active == 0)))
 		end
 	end
 end
@@ -243,20 +245,52 @@ function BarFrameMixin:SetAnchorPosition()
 	self.anchor:SetPoint(P.anchorPoint, self, P.point)
 end
 
-
-
-
-
 local UNIT_TO_PET = {
-	["raid1"]="raidpet1", ["raid2"]="raidpet2", ["raid3"]="raidpet3", ["raid4"]="raidpet4", ["raid5"]="raidpet5",
-	["raid6"]="raidpet6", ["raid7"]="raidpet7", ["raid8"]="raidpet8", ["raid9"]="raidpet9", ["raid10"]="raidpet10",
-	["raid11"]="raidpet11", ["raid12"]="raidpet12", ["raid13"]="raidpet13", ["raid14"]="raidpet14", ["raid15"]="raidpet15",
-	["raid16"]="raidpet16", ["raid17"]="raidpet17", ["raid18"]="raidpet18", ["raid19"]="raidpet19", ["raid20"]="raidpet20",
-	["raid21"]="raidpet21", ["raid22"]="raidpet22", ["raid23"]="raidpet23", ["raid24"]="raidpet24", ["raid25"]="raidpet25",
-	["raid26"]="raidpet26", ["raid27"]="raidpet27", ["raid28"]="raidpet28", ["raid29"]="raidpet29", ["raid30"]="raidpet30",
-	["raid31"]="raidpet31", ["raid32"]="raidpet32", ["raid33"]="raidpet33", ["raid34"]="raidpet34", ["raid35"]="raidpet35",
-	["raid36"]="raidpet36", ["raid37"]="raidpet37", ["raid38"]="raidpet38", ["raid39"]="raidpet39", ["raid40"]="raidpet40",
-	["party1"]="partypet1", ["party2"]="partypet2", ["party3"]="partypet3", ["party4"]="partypet4", ["player"]="pet"
+	["raid1"] = "raidpet1",
+	["raid2"] = "raidpet2",
+	["raid3"] = "raidpet3",
+	["raid4"] = "raidpet4",
+	["raid5"] = "raidpet5",
+	["raid6"] = "raidpet6",
+	["raid7"] = "raidpet7",
+	["raid8"] = "raidpet8",
+	["raid9"] = "raidpet9",
+	["raid10"] = "raidpet10",
+	["raid11"] = "raidpet11",
+	["raid12"] = "raidpet12",
+	["raid13"] = "raidpet13",
+	["raid14"] = "raidpet14",
+	["raid15"] = "raidpet15",
+	["raid16"] = "raidpet16",
+	["raid17"] = "raidpet17",
+	["raid18"] = "raidpet18",
+	["raid19"] = "raidpet19",
+	["raid20"] = "raidpet20",
+	["raid21"] = "raidpet21",
+	["raid22"] = "raidpet22",
+	["raid23"] = "raidpet23",
+	["raid24"] = "raidpet24",
+	["raid25"] = "raidpet25",
+	["raid26"] = "raidpet26",
+	["raid27"] = "raidpet27",
+	["raid28"] = "raidpet28",
+	["raid29"] = "raidpet29",
+	["raid30"] = "raidpet30",
+	["raid31"] = "raidpet31",
+	["raid32"] = "raidpet32",
+	["raid33"] = "raidpet33",
+	["raid34"] = "raidpet34",
+	["raid35"] = "raidpet35",
+	["raid36"] = "raidpet36",
+	["raid37"] = "raidpet37",
+	["raid38"] = "raidpet38",
+	["raid39"] = "raidpet39",
+	["raid40"] = "raidpet40",
+	["party1"] = "partypet1",
+	["party2"] = "partypet2",
+	["party3"] = "partypet3",
+	["party4"] = "partypet4",
+	["player"] = "pet"
 }
 
 function P:SetEnabledColorScheme(info)
@@ -272,7 +306,8 @@ function P:SetEnabledColorScheme(info)
 			icon:SetColorSaturation()
 
 			if icon.glowBorder then
-				icon.Glow:SetShown(condition==3 or (condition==1 and icon.active~=0) or (condition==2 and icon.active==0))
+				icon.Glow:SetShown(condition == 3 or (condition == 1 and icon.active ~= 0) or
+					(condition == 2 and icon.active == 0))
 			end
 		end
 		for _, frame in pairs(P.extraBars) do
@@ -314,7 +349,6 @@ local function CooldownBarFrame_OnEvent(self, event, ...)
 
 		if info.spec == 269 and wwDamageSpells[spellID] then
 			if info.lastComboStrikesID and info.lastComboStrikesID ~= spellID then
-
 				local icon = info.talentData[391330] and info.spellIcons[322109]
 				if icon and icon.active then
 					icon:UpdateCooldown(.6)
@@ -331,7 +365,7 @@ local function CooldownBarFrame_OnEvent(self, event, ...)
 		if P.spell_enabled[spellID] or E.spell_modifiers[spellID] then
 			E.ProcessSpell(spellID, guid)
 		elseif spellID == 384255
-		or spellID == 63644 or spellID == 63645 then
+			or spellID == 63644 or spellID == 63645 then
 			if guid ~= E.userGUID and not CM.syncedGroupMembers[guid] then
 				CM:EnqueueInspect(nil, guid)
 			end
@@ -410,8 +444,6 @@ local function CooldownBarFrame_OnEvent(self, event, ...)
 			CM:EnqueueInspect(nil, guid)
 		end
 	elseif event == 'UNIT_CONNECTION' then
-
-
 		local unit, isConnected = ...
 		if unit ~= info.unit then
 			return
@@ -461,11 +493,11 @@ local function AcquireBarFrame()
 end
 
 local iconTextureFix = {
-	[371032] = {403631,5199622,4622450},
+	[371032] = { 403631, 5199622, 4622450 },
 }
 
 local function GetOverrideTexture(info, iconFix)
-	return info.talentData[ iconFix[1] ] and iconFix[2] or iconFix[3]
+	return info.talentData[iconFix[1]] and iconFix[2] or iconFix[3]
 end
 
 local function FindReducedTime(info, t, specID, rank, isMult)
@@ -566,8 +598,7 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 
 	if E.isDF then
 		local found
-		AuraUtil.ForEachAura(unit, "HELPFUL", nil, function(_,_,_,_,_,_, source, _,_, id)
-
+		AuraUtil.ForEachAura(unit, "HELPFUL", nil, function(_, _, _, _, _, _, source, _, _, id)
 			if id == 410318 then
 				found = true
 				info.itemData[205146] = true
@@ -577,7 +608,6 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 			if auraStr then
 				info.auras[auraStr] = true
 			end
-
 		end)
 
 		if not found and info.itemData[205146] then
@@ -587,7 +617,8 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 
 	local iconIndex = 0
 	for spellID, spell in pairs(E.hash_spelldb) do
-		local cat, spellType, spec, race, item, talent, disabledSpec = spell.class, spell.type, spell.spec, spell.race, spell.item, spell.talent, spell.disabledSpec
+		local cat, spellType, spec, race, item, talent, disabledSpec = spell.class, spell.type, spell.spec, spell.race,
+			spell.item, spell.talent, spell.disabledSpec
 		if not disabledSpec or not disabledSpec[specID] or not disabledSpec[specID][self.zone] then
 			local isValidSpell
 			local enabledSpell = self.spell_enabled[spellID]
@@ -611,18 +642,22 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 				elseif specID then
 					if cat == class then
 						isValidSpell = (not E.postBFA or not E.covenant_abilities[spellID] or self.isInShadowlands)
-							and self:IsSpecOrTalentForPvpStatus(spec==true and spellID or spec, info, lvl >= GetSpellLevelLearned(spellID))
+							and self:IsSpecOrTalentForPvpStatus(spec == true and spellID or spec, info,
+								lvl >= GetSpellLevelLearned(spellID))
 							and (not talent or not self:IsSpecOrTalentForPvpStatus(talent, info, true))
 					elseif cat == "COVENANT" then
-						isValidSpell = self.isInShadowlands and self:IsSpecOrTalentForPvpStatus(spec==true and spellID or spec, info, true)
+						isValidSpell = self.isInShadowlands and
+							self:IsSpecOrTalentForPvpStatus(spec == true and spellID or spec, info, true)
 					elseif cat == "ESSENCE" then
 						isValidSpell = info.talentData[spec]
 					elseif not E.BOOKTYPE_CATEGORY[cat] then
-						isValidSpell = self:IsEquipped(info, item) or (info.sessionItemData[item] and (item ~= 5512 or not info.talentData[386689]))
+						isValidSpell = self:IsEquipped(info, item) or
+							(info.sessionItemData[item] and (item ~= 5512 or not info.talentData[386689]))
 					end
 				else
 					if cat == class then
-						isValidSpell = lvl >= GetSpellLevelLearned(spellID) and (not spec or (loginsessionData and loginsessionData[spec])) and not talent
+						isValidSpell = lvl >= GetSpellLevelLearned(spellID) and
+							(not spec or (loginsessionData and loginsessionData[spec])) and not talent
 					elseif cat == "COVENANT" then
 						isValidSpell = self.isInShadowlands and loginsessionData and loginsessionData[spec]
 					elseif cat == "TRINKET" then
@@ -644,7 +679,7 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 								for k = 1, #modData, 2 do
 									local rank = self:IsTalentForPvpStatus(modData[k], info)
 									if rank then
-										local rt = modData[k+1]
+										local rt = modData[k + 1]
 										if type(rt) == "table" then
 											rt = FindReducedTime(info, rt, specID, rank)
 										end
@@ -678,7 +713,8 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 								if E.preMoP then
 									cd = cd + (info.rangedWeaponSpeed or 0)
 								else
-									local spellHasteMult = info.spellHasteMult or 1/(1 + UnitSpellHaste("player")/100)
+									local spellHasteMult = info.spellHasteMult or
+									1 / (1 + UnitSpellHaste("player") / 100)
 									cd = cd * spellHasteMult
 								end
 							end
@@ -688,7 +724,7 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 								for k = 1, #modData, 2 do
 									local rank = self:IsTalentForPvpStatus(modData[k], info)
 									if rank then
-										local mult = modData[k+1]
+										local mult = modData[k + 1]
 										if type(mult) == "table" then
 											mult = FindReducedTime(info, mult, specID, rank, true)
 										end
@@ -709,7 +745,8 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 							if modData then
 								local stiveSpec = E.spell_cdmod_ess_strive_mult[spellID]
 								if stiveSpec == true or stiveSpec == specID then
-									local pvpCD = self.isPvP and self.loginsessionData[guid] and self.loginsessionData[guid]["strivedPvpCD"]
+									local pvpCD = self.isPvP and self.loginsessionData[guid] and
+										self.loginsessionData[guid]["strivedPvpCD"]
 									cd = pvpCD or cd * modData
 									info.talentData["essStrivedPvpID"] = spellID
 								elseif spellID == 107574 and specID == 71 then
@@ -736,28 +773,28 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 							end
 						elseif cat == "COVENANT" then
 							local covData = E.covenant_cdmod_conduits[spellID]
-							if covData and info.talentData[ covData[1] ] then
+							if covData and info.talentData[covData[1]] then
 								cd = cd - covData[2]
 							end
 
 							covData = E.covenant_cdmod_items_mult[spellID]
-							if covData and info.itemData[ covData[1] ] then
+							if covData and info.itemData[covData[1]] then
 								cd = cd * covData[2]
 							end
 
 							covData = E.covenant_chmod_conduits[spellID]
-							if covData and info.talentData[ covData[1] ] then
+							if covData and info.talentData[covData[1]] then
 								ch = ch + covData[2]
 							end
 						elseif cat == "ESSENCE" then
-							local essData = E.spell_cdmod_essrank23 [spellID]
+							local essData = E.spell_cdmod_essrank23[spellID]
 							if essData then
 								if E:IsEssenceRankUpgraded(info.talentData["essMajorID"]) then
 									cd = cd - essData
 								end
 							end
 
-							essData = E.spell_chargemod_essrank3 [spellID]
+							essData = E.spell_chargemod_essrank3[spellID]
 							if essData then
 								if essData[1] == info.talentData["essMajorID"] then
 									ch = ch + essData[2]
@@ -770,7 +807,7 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 									local tal = modData[k]
 									local rank = self:IsTalentForPvpStatus(tal, info)
 									if rank then
-										local rt = modData[k+1]
+										local rt = modData[k + 1]
 										rt = type(rt) == "table" and (rt[rank] or rt[1]) or rt
 										cd = cd - rt
 									end
@@ -787,10 +824,8 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 
 					local icon
 					if extraBarFrame then
-
-
 						extraBarFrame.numIcons = extraBarFrame.numIcons + 1
-						if ( extraBarFrame.db.unitBar ) then
+						if (extraBarFrame.db.unitBar) then
 							local unitBar = frame.activeUnitBars[enabledSpell]
 							icon = self:AcquireIcon(extraBarFrame, extraBarFrame.numIcons, unitBar)
 							unitBar.icons[#unitBar.icons + 1] = icon
@@ -816,7 +851,8 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 					icon.duration = cd and cd < 1 and 1 or cd
 					icon.baseCooldown = baseCooldown
 					icon.maxcharges = ch
-					icon.count:SetText(ch or (spellID == 323436 and info.auras.purifySoulStacks) or (spellID == 6262 and info.auras.healthStoneStacks) or "")
+					icon.count:SetText(ch or (spellID == 323436 and info.auras.purifySoulStacks) or
+						(spellID == 6262 and info.auras.healthStoneStacks) or "")
 
 					local iconFix = iconTextureFix[spellID]
 					if iconFix then
@@ -827,9 +863,9 @@ function P:UpdateUnitBar(guid, isUpdateBarsOrGRU)
 
 					icon.active = nil
 					icon.tooltipID = nil
+					icon.modRate = info.spellModRates[spellID] or 1
 					icon.glowBorder = not extraBarFrame and E.db.highlight.glowBorder and E.db.spellGlow[spellID]
 					icon.Glow:Hide()
-					icon.modRate = info.spellModRates[spellID] or 1
 
 					if Masque then
 						masqueGroup:AddButton(icon, icon.icon)
