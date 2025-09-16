@@ -2,51 +2,15 @@ local E = select(2, ...):unpack()
 local P, CM = E.Party, E.Comm
 
 local UNIT_TO_PET = {
-	["raid1"] = "raidpet1",
-	["raid2"] = "raidpet2",
-	["raid3"] = "raidpet3",
-	["raid4"] = "raidpet4",
-	["raid5"] = "raidpet5",
-	["raid6"] = "raidpet6",
-	["raid7"] = "raidpet7",
-	["raid8"] = "raidpet8",
-	["raid9"] = "raidpet9",
-	["raid10"] = "raidpet10",
-	["raid11"] = "raidpet11",
-	["raid12"] = "raidpet12",
-	["raid13"] = "raidpet13",
-	["raid14"] = "raidpet14",
-	["raid15"] = "raidpet15",
-	["raid16"] = "raidpet16",
-	["raid17"] = "raidpet17",
-	["raid18"] = "raidpet18",
-	["raid19"] = "raidpet19",
-	["raid20"] = "raidpet20",
-	["raid21"] = "raidpet21",
-	["raid22"] = "raidpet22",
-	["raid23"] = "raidpet23",
-	["raid24"] = "raidpet24",
-	["raid25"] = "raidpet25",
-	["raid26"] = "raidpet26",
-	["raid27"] = "raidpet27",
-	["raid28"] = "raidpet28",
-	["raid29"] = "raidpet29",
-	["raid30"] = "raidpet30",
-	["raid31"] = "raidpet31",
-	["raid32"] = "raidpet32",
-	["raid33"] = "raidpet33",
-	["raid34"] = "raidpet34",
-	["raid35"] = "raidpet35",
-	["raid36"] = "raidpet36",
-	["raid37"] = "raidpet37",
-	["raid38"] = "raidpet38",
-	["raid39"] = "raidpet39",
-	["raid40"] = "raidpet40",
-	["party1"] = "partypet1",
-	["party2"] = "partypet2",
-	["party3"] = "partypet3",
-	["party4"] = "partypet4",
-	["player"] = "pet"
+	["raid1"]="raidpet1", ["raid2"]="raidpet2", ["raid3"]="raidpet3", ["raid4"]="raidpet4", ["raid5"]="raidpet5",
+	["raid6"]="raidpet6", ["raid7"]="raidpet7", ["raid8"]="raidpet8", ["raid9"]="raidpet9", ["raid10"]="raidpet10",
+	["raid11"]="raidpet11", ["raid12"]="raidpet12", ["raid13"]="raidpet13", ["raid14"]="raidpet14", ["raid15"]="raidpet15",
+	["raid16"]="raidpet16", ["raid17"]="raidpet17", ["raid18"]="raidpet18", ["raid19"]="raidpet19", ["raid20"]="raidpet20",
+	["raid21"]="raidpet21", ["raid22"]="raidpet22", ["raid23"]="raidpet23", ["raid24"]="raidpet24", ["raid25"]="raidpet25",
+	["raid26"]="raidpet26", ["raid27"]="raidpet27", ["raid28"]="raidpet28", ["raid29"]="raidpet29", ["raid30"]="raidpet30",
+	["raid31"]="raidpet31", ["raid32"]="raidpet32", ["raid33"]="raidpet33", ["raid34"]="raidpet34", ["raid35"]="raidpet35",
+	["raid36"]="raidpet36", ["raid37"]="raidpet37", ["raid38"]="raidpet38", ["raid39"]="raidpet39", ["raid40"]="raidpet40",
+	["party1"]="partypet1", ["party2"]="partypet2", ["party3"]="partypet3", ["party4"]="partypet4", ["player"]="pet"
 }
 
 local BarFrameMixin = {}
@@ -54,10 +18,13 @@ local BarFrameMixin = {}
 function BarFrameMixin:OnEvent(event, ...)
 	local info = self.info
 	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+
+
 		local unit, _, spellID = ...
 		if unit ~= self.unit and unit ~= UNIT_TO_PET[self.unit] then
 			return
 		end
+
 		if E.spellcast_all[spellID] then
 			info:ProcessSpell(spellID)
 		end
@@ -73,10 +40,14 @@ function BarFrameMixin:OnEvent(event, ...)
 
 
 
+
+
+
 		if not UnitIsDeadOrGhost(unit) then
-			if E.preCata then
+			if E.preMoP then
 				local icon = info.spellIcons[20608]
 				if icon then
+
 					local mult = info.talentData[16184] and 0.3 or (info.talentData[16209] and 0.4) or 0.2
 					if UnitHealth(unit) == floor(UnitHealthMax(unit) * mult) then
 						icon:StartCooldown()
@@ -129,6 +100,8 @@ function BarFrameMixin:OnEvent(event, ...)
 			CM:EnqueueInspect(nil, self.guid)
 		end
 	elseif event == "UNIT_CONNECTION" then
+
+
 		local unit, isConnected = ...
 		if unit ~= self.unit then
 			return
@@ -336,7 +309,7 @@ function BarFrameMixin:UpdateLayout(sortOrder)
 			if numActive > 1 then
 				count = count + 1
 				if not P.multiline and count == P.columns or (P.multiline and
-						(rows == 1 and iconPrio <= P.breakPoint or (P.tripleline and rows == 2 and iconPrio <= P.breakPoint2))) then
+				(rows == 1 and iconPrio <= P.breakPoint or (P.tripleline and rows == 2 and iconPrio <= P.breakPoint2))) then
 					if P.tripleline and rows == 1 and iconPrio <= P.breakPoint2 then
 						rows = rows + 1
 					end

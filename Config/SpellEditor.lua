@@ -1,6 +1,6 @@
 local E, L = select(2, ...):unpack()
 
-local GetNumSpecializationsForClassID = GetNumSpecializationsForClassID
+local GetNumSpecializationsForClassID = C_SpecializationInfo and C_SpecializationInfo.GetNumSpecializationsForClassID
 local GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 if E.preCata then
@@ -32,6 +32,7 @@ function E:UpdateSpell(id, isInit, oldClass, oldType)
 
 		if not spellInfo then
 			self.hash_spelldb[id] = v
+			self.spellcast_all[id] = true
 
 		elseif not v.custom and not defaultBackup[id] then
 			defaultBackup[id] = self:DeepCopy(self.hash_spelldb[id])

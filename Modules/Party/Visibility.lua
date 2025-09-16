@@ -39,7 +39,7 @@ local INSTANCETYPE_EVENTS = {
 	}
 }
 
-if E.preCata then
+if E.preMoP then
 	if E.preBCC then
 		INSTANCETYPE_EVENTS.raid = nil
 	end
@@ -196,7 +196,7 @@ function P:PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi, isRefresh)
 	self.zone = instanceType
 	self.isInArena = instanceType == "arena"
 	self.isInPvPInstance = self.isInArena or instanceType == "pvp"
-	self.isPvP = E.preCata or self.isInPvPInstance or (instanceType == "none" and C_PvP.IsWarModeDesired())
+	self.isPvP = E.preMoP or (self.isInPvPInstance or instanceType == "none" and C_PvP.IsWarModeDesired())
 	self.effectivePixelMult = nil
 
 	self:RegisterZoneEvents()
@@ -223,7 +223,16 @@ function P:PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi, isRefresh)
 
 
 
-	self:GROUP_ROSTER_UPDATE(true, isRefresh)
+
+	if isRefresh then
+		self:UpdateDelayedZoneData()
+		self:GROUP_ROSTER_UPDATE(true)
+	else
+		C_Timer.After(1, function()
+			self:UpdateDelayedZoneData()
+			self:GROUP_ROSTER_UPDATE(true)
+		end)
+	end
 end
 
 P.ZONE_CHANGED_NEW_AREA = P.PLAYER_ENTERING_WORLD
@@ -248,12 +257,17 @@ end
 
 function P:UpdateRosterInfo(force, clearSession)
 	local size = P:GetEffectiveNumGroupMembers()
+	local isInRaid = IsInRaid()
 
 	local wasDisabled = P.disabled
-	P.disabled = not P.isInTestMode and (size == 0 or E.isInPetBattle
-		or (size == 1 and P.isUserDisabled)
-		or (GetNumGroupMembers(LE_PARTY_CATEGORY_HOME) == 0 and not E.profile.Party.visibility.finder)
-		or (size > E.profile.Party.groupSize[P.zone]))
+	P.disabled = not P.isInTestMode and (
+		size == 0 or
+		E.isInPetBattle or
+		size == 1 and P.isUserDisabled or
+		GetNumGroupMembers(LE_PARTY_CATEGORY_HOME) == 0 and not E.profile.Party.visibility.finder or
+		size > E.profile.Party.groupSize[P.zone] or
+		isInRaid and not E.profile.Party.raidGroup[P.zone]
+	)
 
 	if P.disabled then
 		if not wasDisabled then
@@ -270,7 +284,6 @@ function P:UpdateRosterInfo(force, clearSession)
 
 	E.Libs.CBH:Fire("OnStartup")
 
-	local isInRaid = IsInRaid()
 	local isCallback = type(self) == "userdata"
 	local isReadyForSync = isCallback and P.groupJoined
 
@@ -375,14 +388,9 @@ function P:UpdateRosterInfo(force, clearSession)
 	end
 end
 
-function P:GROUP_ROSTER_UPDATE(isPEW, isRefresh)
-	if isRefresh or GetNumGroupMembers() == 0 then
+function P:GROUP_ROSTER_UPDATE(isPEWOrRefresh)
+	if isPEWOrRefresh or GetNumGroupMembers() == 0 then
 		self:UpdateRosterInfo(true)
-	elseif isPEW then
-		C_Timer.After(1, function()
-			self:UpdateDelayedZoneData()
-			self:UpdateRosterInfo(true, true)
-		end)
 	else
 		C_Timer.After(0, function()
 			self:UpdateRosterInfo()

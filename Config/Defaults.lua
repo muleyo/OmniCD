@@ -27,6 +27,14 @@ C.Party = {
 	},
 	["noneZoneSetting"] = "arena",
 	["scenarioZoneSetting"] = "arena",
+	["raidGroup"] = {
+		["arena"] = true,
+		["pvp"] = true,
+		["party"] = true,
+		["raid"] = true,
+		["scenario"] = false,
+		["none"] = false,
+	},
 }
 
 C.Party.arena = {
@@ -522,7 +530,7 @@ C.Party.party.spells = {
 	["207289"] = true,
 	["42650"] = true,
 	["51271"] = true,
-	["152279"] = true,
+	["1249658"] = true,
 	["191427"] = true,
 	["258860"] = true,
 	["50334"] = true,

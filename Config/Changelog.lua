@@ -1,6 +1,59 @@
 local _, NS = ...
 
 local changelog = [=[
+### v2.8.27
+-   Fix Reshii Wraps to show on tank spec only
+-   Support TPerl, andromeda
+
+### v2.8.26
+-   Fix PvP talent Master and Commander CDR amount
+-   Fix PvP talent Dragon Charge not benefitting from Vicious Agility and Blessing of the Bronze
+-   Fix PvP talent Blessing of Sanctuary CD
+-   Add PvP talent Wild Kingdom (Hunter)
+-   Add PvP talent Soul Rip (Warlock)
+-   Add Reshii Wraps cheat death proc
+
+### v2.8.25
+-   Fix editor not registering new spells
+-   Fix Cooldown: Pillar of Frost, Ancestral Swiftness
+-   Fix Thunder Focus Tea charges with Endless Draught hero talent
+-   Fix Demonic Trample as PvP talent
+-   Fix Cycle of Binding CDR for Sigil of Doom w/o Precise Sigil
+-   Fix Immolation Aura cast during Immolation Aura
+-   Update icon texture: Shifting Power, Gust of Wind
+-   Move Grimoire: Felguard to offensive category
+-   Add Summon Vilefiend variants
+-   Add trinkets: Araz's Ritual Forged, All-Devouring Nucleus, Soulbinder's Embrace, Loom'ithar's Living Silk
+-   Add option to disable addon in raid-scenario and outdoor raid groups
+
+### v2.8.24
+-   Fix set bonus being ignored
+
+### v2.8.23
+-   Invigorating Healing Potion merged to Algari Healing Potion
+-   Legion of Souls will correctly replace Army of the Dead
+-   Apocalypse will correctly replace Dark Transformation
+
+### v2.8.22
+-   Update for Patch 11.2
+-   MoP: add missing pvp set bonus items
+
+### v2.8.20
+-   Update for Patch 11.2_XPTR_
+-   MoP: Add missing pvp item IDs (Dreadful, Crafted, Elite, ...)
+-   MoP: Add Guard (Brewmaster)
+
+### v2.8.19
+-   Fix interrupted target marker
+-   Sync Healthstone stacks
+-   MoP: Add Symbiosis aquired abilities under each Class
+-   MoP: Show interrupted spell and target marker on Interrupt Bar (same as retail)
+-   MoP: Show Healthstone and Demonic Gateway on cast (same as retail)
+-   MoP: Warlock - Update Spell Lock and Devour Magic to whichever pet special abilities were used last (same as retail)
+-   MoP: Warlock - Hide Unending Resolve in Arena/BG if Glyph of Eternal Resolve is active
+-   MoP: Warrior - Show Heroic Throw outside of Arena/BG if Glyph of Gag Order is active
+-   MoP: CD synced abilities: AMS w/ Glyph of Regenerative Magic, Adrenaline Rush, Killing Spree, Redirect, Shadow Blades, Sprint
+
 ### v2.8.18
 -   Revamp Sync to compare CDR amount. This will drastically decrease sync frequency, proportional to the addon's CDR accuracy
 -   No longer communicates with older addon versions
